@@ -11,7 +11,16 @@ const PostSchema = new Schema({
     },
     hashtags: String,
 }, {
-    timestamps: true,
+    toJSON: {
+        virtuals: true
+    }
+},
+    {
+        timestamps: true,
+    });
+
+PostSchema.virtual('image_url').get(function () {
+    return `${process.env.URL}${this.image}`;
 });
 
 module.exports = model('Post', PostSchema);
