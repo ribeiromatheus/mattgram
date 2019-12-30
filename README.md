@@ -8,10 +8,12 @@
 
 ## Useful libs / modules
 - [react-router-dom](https://github.com/ReactTraining/react-router/tree/master/packages/react-router-dom)
+- [react-navigation](https://github.com/react-navigation/react-navigation)
 - [express](https://github.com/expressjs/express)
 - [axios](https://github.com/axios/axios)
 - [MongoDB (mongoose)](https://github.com/Automattic/mongoose)
 - [sharp](https://github.com/lovell/sharp)
+- [ImagePicker](https://docs.expo.io/versions/latest/sdk/imagepicker/)
 - [multer](https://github.com/expressjs/multer)
 - [socket.io](https://github.com/socketio/socket.io)
 - [socket.io-client](https://github.com/socketio/socket.io-client)
