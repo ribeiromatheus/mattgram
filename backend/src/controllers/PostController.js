@@ -24,7 +24,7 @@ module.exports = {
         fs.unlinkSync(currentPath);
 
         const post = await Post.create({
-            image: image,
+            image,
             author,
             place,
             description,
