@@ -16,7 +16,8 @@ export default class New extends Component {
         place: '',
         description: '',
         hashtags: '',
-        image: null,
+        preview: null,
+        image: null
     };
 
     componentDidMount() {
@@ -30,7 +31,7 @@ export default class New extends Component {
         }
     }
 
-    _pickImage = async () => {
+    pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
@@ -38,17 +39,48 @@ export default class New extends Component {
             quality: 1
         });
 
+        let localUri = result.uri;
+        let filename = localUri.split('/').pop();
+
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+
         const image = {
-            uri: result.uri,
-            type: result.type
+            uri: localUri,
+            name: filename,
+            type
         };
 
-        if (!result.cancelled) {
-            this.setState({ image });
-        }
+        this.setState({ image });
 
-        console.log(result)
-    };
+        if (!result.cancelled)
+            this.setState({ preview: result.uri });
+    }
+
+    takePicture = async () => {
+        let result = await ImagePicker.launchCameraAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1
+        });
+
+        if (!result.cancelled)
+            this.setState({ preview: result.uri });
+
+        let localUri = result.uri;
+        let filename = localUri.split('/').pop();
+
+        let match = /\.(\w+)$/.exec(filename);
+        let type = match ? `image/${match[1]}` : `image`;
+
+        const image = {
+            uri: localUri,
+            name: filename,
+            type
+        };
+
+        this.setState({ image });
+    }
 
     handleSubmit = async () => {
         const data = new FormData();
@@ -59,21 +91,25 @@ export default class New extends Component {
         data.append('description', this.state.description);
         data.append('hashtags', this.state.hashtags);
 
-        await api.post('/posts', data)
+        await api.post('/posts', data);
 
         this.props.navigation.navigate('Feed');
     }
 
     render() {
-        let { image } = this.state;
+        let { preview } = this.state;
 
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Header.HEIGHT + 20} style={styles.container}>
                 <ScrollView>
-                    <TouchableOpacity style={styles.selectButton} onPress={this._pickImage}>
+                    <TouchableOpacity style={styles.selectButton} onPress={this.takePicture}>
+                        <Text style={styles.selectButtonText}>Tirar foto</Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.selectButton} onPress={this.pickImage}>
                         <Text style={styles.selectButtonText}>Selecionar imagem</Text>
                     </TouchableOpacity>
-                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+                    {preview && <Image source={{ uri: preview }} style={{ width: 200, height: 200 }} />}
 
                     <TextInput
                         style={styles.input}
