@@ -6,6 +6,8 @@ import { StyleSheet, ScrollView, TouchableOpacity, Text, TextInput, Image, Keybo
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 
+import camera from '../../assets/camera.png';
+
 export default class New extends Component {
     static navigationOptions = {
         headerTitle: 'Nova publicação'
@@ -55,6 +57,8 @@ export default class New extends Component {
 
         if (!result.cancelled)
             this.setState({ preview: result.uri });
+        else
+            return;
     }
 
     takePicture = async () => {
@@ -66,6 +70,8 @@ export default class New extends Component {
 
         if (!result.cancelled)
             this.setState({ preview: result.uri });
+        else
+            return;
 
         let localUri = result.uri;
         let filename = localUri.split('/').pop();
@@ -102,7 +108,8 @@ export default class New extends Component {
         return (
             <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={Header.HEIGHT + 20} style={styles.container}>
                 <ScrollView>
-                    <TouchableOpacity style={styles.selectButton} onPress={this.takePicture}>
+                    <TouchableOpacity style={styles.takePic} onPress={this.takePicture}>
+                        <Image source={camera} />
                         <Text style={styles.selectButtonText}>Tirar foto</Text>
                     </TouchableOpacity>
 
@@ -171,6 +178,15 @@ const styles = StyleSheet.create({
         height: 42,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    takePic: {
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        height: 42,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
     },
     selectButtonText: {
         fontSize: 16,

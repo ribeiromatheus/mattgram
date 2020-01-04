@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
     hashtags: {
         color: '#7159c1'
     }
-})
+});
