@@ -4,6 +4,8 @@ import io from 'socket.io-client';
 
 import { View, Text, Image, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 
+import credentials from '../../credentials/baseUrl';
+
 import camera from '../../assets/camera.png';
 import more from '../../assets/more.png';
 import like from '../../assets/like.png';
@@ -34,7 +36,7 @@ export default class Feed extends Component {
     }
 
     registerToSocket = () => {
-        const socket = io('http://192.168.1.100:3333');
+        const socket = io(credentials.base_url);
 
         socket.on('post', newPost => {
             this.setState({ feed: [newPost, ...this.state.feed] });
