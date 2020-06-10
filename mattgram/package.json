@@ -13,6 +13,7 @@
     "expo-image-picker": "~8.0.1",
     "expo-permissions": "~8.0.0",
     "kind-of": "^6.0.3",
+    "logkitty": "^0.7.1",
     "minimist": "^1.2.5",
     "react": "~16.9.0",
     "react-dom": "~16.9.0",
