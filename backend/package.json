@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dot-prop": "^4.2.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "minimist": "^1.2.3",
     "mongoose": "^5.8.3",
     "multer": "^1.4.2",
     "sharp": "^0.23.4",
